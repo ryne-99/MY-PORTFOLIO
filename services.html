@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Irene Munyiri</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#020408; --panel:#070d16; --accent:#00f5ff; --accent2:#7b2fff;
+    --accent3:#ff2d78; --green:#00ff88; --text:#cce8ff; --muted:#3a6080;
+    --border:rgba(0,245,255,0.12); --glow:0 0 20px rgba(0,245,255,0.35);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;cursor:none;}
+  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,245,255,0.008) 2px,rgba(0,245,255,0.008) 4px);pointer-events:none;z-index:9990;}
+  .cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 12px var(--accent),0 0 24px var(--accent);transition:transform 0.12s;}
+  .cursor-ring{position:fixed;width:38px;height:38px;border:1px solid rgba(0,245,255,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s;}
+  #mc{position:fixed;inset:0;opacity:0.03;pointer-events:none;z-index:0;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.1rem 4rem;display:flex;align-items:center;justify-content:space-between;background:rgba(2,4,8,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+  .logo{font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;letter-spacing:0.2em;color:var(--accent);text-shadow:var(--glow);text-decoration:none;}
+  .logo::before{content:'> ';color:var(--accent2);}
+  .back-home{display:inline-flex;align-items:center;gap:0.6rem;font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:0.45rem 1.1rem;transition:color 0.2s,border-color 0.2s;}
+  .back-home:hover{color:var(--accent);border-color:var(--accent);}
+  .back-home svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;transition:transform 0.2s;}
+  .back-home:hover svg{transform:translateX(-3px);}
+
+  /* HERO */
+  .shero{min-height:48vh;position:relative;display:flex;align-items:center;justify-content:center;padding:8rem 4rem 4rem;text-align:center;overflow:hidden;}
+  .shero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#020408 0%,#060c18 50%,#020408 100%);}
+  .shero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,245,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,0.04) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse at 50% 60%,black 30%,transparent 70%);}
+  .shero-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(0,245,255,0.06) 0%,transparent 60%);top:50%;left:50%;transform:translate(-50%,-50%);animation:breathe 5s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.1)}}
+  .shero-content{position:relative;z-index:1;}
+  .sec-badge{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);border:1px solid var(--border);padding:0.35rem 1rem;margin-bottom:1.5rem;}
+  .sec-badge::before{content:'';width:5px;height:5px;background:var(--accent);border-radius:50%;box-shadow:var(--glow);animation:blink 1.8s infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+  .shero-title{font-family:'Orbitron',monospace;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.08;letter-spacing:0.03em;margin-bottom:1.2rem;opacity:0;animation:fadeUp 0.8s 0.2s ease forwards;}
+  .shero-title .ac{color:var(--accent);text-shadow:var(--glow);}
+  .shero-sub{font-family:'Share Tech Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.8;opacity:0;animation:fadeUp 0.8s 0.4s ease forwards;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SERVICES GRID */
+  .services-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:4rem 4rem 6rem;}
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+  .svc-card{background:var(--bg);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:background 0.3s;}
+  .svc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,245,255,0.03),transparent);opacity:0;transition:opacity 0.3s;}
+  .svc-card:hover{background:var(--panel);}
+  .svc-card:hover::before{opacity:1;}
+  .svc-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);box-shadow:var(--glow);transition:width 0.4s ease;}
+  .svc-card:hover::after{width:100%;}
+  .svc-icon{font-size:1.6rem;margin-bottom:1.2rem;display:block;}
+  .svc-num{position:absolute;top:1.5rem;right:1.8rem;font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;color:var(--border);letter-spacing:0.1em;}
+  .svc-name{font-family:'Orbitron',monospace;font-size:0.95rem;font-weight:700;letter-spacing:0.06em;color:var(--text);margin-bottom:0.8rem;line-height:1.3;}
+  .svc-desc{font-size:0.88rem;line-height:1.75;color:rgba(204,232,255,0.5);margin-bottom:1.4rem;}
+  .svc-tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
+  .svc-tag{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;padding:0.2rem 0.6rem;border:1px solid var(--border);color:var(--muted);text-transform:uppercase;transition:border-color 0.2s,color 0.2s;}
+  .svc-card:hover .svc-tag{border-color:rgba(0,245,255,0.2);color:var(--accent);}
+
+  /* CTA */
+  .cta-band{position:relative;z-index:1;margin:0 4rem 6rem;border:1px solid var(--border);padding:3.5rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;overflow:hidden;}
+  .cta-band::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,245,255,0.03),rgba(123,47,255,0.03));pointer-events:none;}
+  .cta-band::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
+  .cta-text h3{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:700;letter-spacing:0.04em;margin-bottom:0.5rem;}
+  .cta-text h3 .ac{color:var(--accent);text-shadow:var(--glow);}
+  .cta-text p{font-family:'Share Tech Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;color:var(--muted);}
+  .cta-btn{font-family:'Share Tech Mono',monospace;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:#000;background:var(--accent);padding:1rem 2.4rem;text-decoration:none;font-weight:600;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:box-shadow 0.3s;box-shadow:0 0 0 rgba(0,245,255,0);}
+  .cta-btn:hover{box-shadow:0 0 30px rgba(0,245,255,0.4);}
+
+  /* FOOTER */
+  footer{position:relative;z-index:1;padding:2rem 4rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+  .flogo{font-family:'Orbitron',monospace;font-size:0.95rem;font-weight:700;color:var(--accent);text-shadow:var(--glow);letter-spacing:0.2em;text-decoration:none;}
+  .fcopy{font-family:'Share Tech Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;color:var(--muted);}
+  .fsocs{display:flex;gap:0.6rem;}
+  .fsoc{width:32px;height:32px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:0.65rem;transition:border-color 0.2s,color 0.2s;}
+  .fsoc:hover{border-color:var(--accent);color:var(--accent);}
+
+  @media(max-width:1000px){.svc-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:700px){
+    nav{padding:1rem 1.5rem;}
+    .shero{padding:7rem 1.5rem 3rem;}
+    .services-wrap{padding:3rem 1.5rem 4rem;}
+    .svc-grid{grid-template-columns:1fr;}
+    .cta-band{margin:0 1.5rem 4rem;padding:2rem 1.5rem;}
+    footer{padding:1.5rem;flex-direction:column;align-items:center;text-align:center;}
+  }
+</style>
+</head>
+<body>
+<canvas id="mc"></canvas>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="home.html" class="logo">IRENE.DEV</a>
+  <a href="home.html" class="back-home">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="shero">
+  <div class="shero-bg"></div>
+  <div class="shero-grid"></div>
+  <div class="shero-glow"></div>
+  <div class="shero-content">
+    <div class="sec-badge">What I Offer</div>
+    <h1 class="shero-title">Services &amp; <span class="ac">Solutions</span></h1>
+    <p class="shero-sub">// From pixel-perfect frontends to bulletproof networks — here's how I can help your project ship.</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="services-wrap">
+  <div class="svc-grid">
+
+    <div class="svc-card">
+      <span class="svc-num">01</span>
+      <span class="svc-icon">🖥️</span>
+      <div class="svc-name">Web Development</div>
+      <div class="svc-desc">Full-stack web apps and sites built with modern frameworks. From landing pages to complex dashboards — fast, responsive, and production-ready.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Next.js</span><span class="svc-tag">React</span>
+        <span class="svc-tag">Node.js</span><span class="svc-tag">Tailwind</span>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <span class="svc-num">02</span>
+      <span class="svc-icon">🎨</span>
+      <div class="svc-name">UI / UX Design</div>
+      <div class="svc-desc">Clean, intuitive interfaces designed in Figma before a single line of code is written. User flows, wireframes, and high-fidelity prototypes.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Figma</span><span class="svc-tag">Prototyping</span>
+        <span class="svc-tag">Wireframes</span><span class="svc-tag">Design Systems</span>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <span class="svc-num">03</span>
+      <span class="svc-icon">🛠️</span>
+      <div class="svc-name">IT Support</div>
+      <div class="svc-desc">Hardware repairs, OS setup, troubleshooting, remote support, and malware removal. Fast, reliable, and available when things go wrong.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Hardware</span><span class="svc-tag">Windows</span>
+        <span class="svc-tag">Remote</span><span class="svc-tag">Help Desk</span>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <span class="svc-num">04</span>
+      <span class="svc-icon">🌐</span>
+      <div class="svc-name">Network Setup</div>
+      <div class="svc-desc">Structured LAN/WAN design, VLAN configuration, firewall rules, and router setup for offices of any size — built to be secure and scalable.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Cisco</span><span class="svc-tag">VLANs</span>
+        <span class="svc-tag">Firewall</span><span class="svc-tag">TCP/IP</span>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <span class="svc-num">05</span>
+      <span class="svc-icon">⚙️</span>
+      <div class="svc-name">System Administration</div>
+      <div class="svc-desc">Linux and Windows Server setup, Active Directory, user management, automated backups, and monitoring — your infrastructure, properly managed.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Linux</span><span class="svc-tag">Windows Server</span>
+        <span class="svc-tag">Active Directory</span><span class="svc-tag">Bash</span>
+      </div>
+    </div>
+
+    <div class="svc-card">
+      <span class="svc-num">06</span>
+      <span class="svc-icon">💡</span>
+      <div class="svc-name">IT Consulting</div>
+      <div class="svc-desc">Strategic tech advice for startups, SMEs, and NGOs. From stack selection to infrastructure planning — clear guidance without the jargon.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Strategy</span><span class="svc-tag">Architecture</span>
+        <span class="svc-tag">Planning</span><span class="svc-tag">Audits</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="cta-text">
+    <h3>Ready to build something <span class="ac">great</span>?</h3>
+    <p>// Let's talk about your project — no commitment, just a conversation.</p>
+  </div>
+  <a href="home.html#contact" class="cta-btn">Get In Touch →</a>
+</div>
+
+<footer>
+  <a href="irene-portfolio.html" class="flogo">IRENE.DEV</a>
+  <div class="fcopy">© 2025 Irene Munyiri — Engineered with precision</div>
+  <div class="fsocs">
+    <a href="#" class="fsoc">Gh</a>
+    <a href="#" class="fsoc">Li</a>
+    <a href="#" class="fsoc">Tw</a>
+    <a href="#" class="fsoc">Ig</a>
+  </div>
+</footer>
+
+<script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(2.2)';ring.style.width='52px';ring.style.height='52px';ring.style.opacity='0.3';});
+    el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='38px';ring.style.height='38px';ring.style.opacity='1';});
+  });
+  const canvas=document.getElementById('mc'),ctx=canvas.getContext('2d');
+  function rsz(){canvas.width=innerWidth;canvas.height=innerHeight;}rsz();window.addEventListener('resize',rsz);
+  const chars='01アイウABCD<>{}[]#@$%*';const fs=13;
+  let cols=Math.floor(canvas.width/fs),drops=Array.from({length:cols},()=>Math.random()*-80);
+  function draw(){ctx.fillStyle='rgba(2,4,8,0.055)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#00f5ff';ctx.font=fs+'px Share Tech Mono';for(let i=0;i<drops.length;i++){ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*fs,drops[i]*fs);if(drops[i]*fs>canvas.height&&Math.random()>0.975)drops[i]=0;drops[i]++;}}setInterval(draw,55);
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}}),{threshold:0.1});
+  document.querySelectorAll('.svc-card').forEach((el,i)=>{
+    el.style.opacity='0';el.style.transform='translateY(24px)';
+    el.style.transition=`opacity 0.6s ${i*0.08}s ease, transform 0.6s ${i*0.08}s ease, background 0.3s`;
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
