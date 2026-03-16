@@ -244,6 +244,54 @@
     footer{padding:1.5rem;flex-direction:column;align-items:center;text-align:center;}
     .hero-layout{flex-direction:column;}.profile-col{width:100%;align-items:center;}
     .ov-wrap{padding:4rem 1.4rem 5rem;}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 30px;
+}
+
+.nav-links{
+    display:flex;
+    list-style:none;
+    gap:20px;
+}
+
+.menu-toggle{
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* MOBILE */
+@media (max-width:768px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    .nav-links{
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        top:70px;
+        left:0;
+        width:100%;
+        background:#fff;
+        text-align:center;
+        padding:20px 0;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .connect-btn{
+        display:none;
+    }
+}
+
   }
 </style>
 </head>
@@ -256,7 +304,7 @@
 <nav>
   <div class="logo">IRENE.DEV</div>
  <div class="menu-toggle" id="mobile-menu">
-                ☰
+             <div>☰</div>
 
       </div>
 
@@ -515,6 +563,13 @@
 </footer>
 
 <script>
+
+const menuToggle = document.getElementById("mobile-menu");
+const navLinks = document.querySelector(".nav-links");
+
+menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
 // ── CURSOR ──
 const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
@@ -651,6 +706,8 @@ function showSuccess(){
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeProject();});
+
+
 
 // ── PROJECTS DATA ──
 const PROJECTS={
